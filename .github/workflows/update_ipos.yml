@@ -15,20 +15,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install requests beautifulsoup4
-
-      - name: Run IPO & GMP Scraper
-        run: python scraper.py
+      - name: Run IPO & GMP Script
+        run: python3 scraper.py
 
       - name: Commit and Push updated ipos.json
         run: |
-          git config --global user.name "IPO Data Bot"
-          git config --global user.email "actions@github.com"
+          git config user.name "IPO Data Bot"
+          git config user.email "actions@github.com"
           git add ipos.json
-          git diff --staged --quiet || (git commit -m "Auto-update live IPO & GMP data" && git pull --rebase origin main && git push origin main)
+          git commit -m "Auto-update live IPO & GMP data" || echo "No changes to commit"
+          git pull --rebase origin main
+          git push origin main
