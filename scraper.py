@@ -1,13 +1,9 @@
 import json
 import re
+import urllib.request
 from datetime import datetime, timezone, timedelta
-import requests
-from bs4 import BeautifulSoup
 
 IST = timezone(timedelta(hours=5, minutes=30))
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-}
 
 REGISTRAR_URLS = {
     "Link Intime India": "https://linkintime.co.in/Initial_Offer/public-issues.html",
@@ -15,22 +11,10 @@ REGISTRAR_URLS = {
     "Bigshare Services": "https://ipo.bigshareonline.com/IPO_Status.html",
     "Purva Sharegistry": "https://www.purvashare.com/investor-service/ipo-query",
     "Skyline Financial": "https://www.skylinerta.com/ipo.php",
-    "Maashitla Securities": "https://maashitla.com/allotment-status/public-issues"
+    "Maashitla Securities": "https://maashitla.com/allotment-status/public-issues",
+    "Mas Services": "https://www.masserv.com/opt.asp"
 }
 
-def extract_num(text, default=0.0):
-    if not text:
-        return default
-    m = re.search(r"[-+]?\d+(?:\.\d+)?", str(text).replace(",", ""))
-    return float(m.group(0)) if m else default
-
-def get_registrar_for_name(name):
-    registrars = ["Link Intime India", "KFin Technologies", "Bigshare Services", "Purva Sharegistry", "Skyline Financial", "Maashitla Securities"]
-    idx = sum(ord(c) for c in name) % 3  # Defaults across top 3 registrars if not specified
-    reg = registrars[idx]
-    return reg, REGISTRAR_URLS[reg]
-
-# 1. Core Verified Current & Recent IPOs (Exact match with ipopremium.in & ipowatch.in)
 BASE_IPOS = [
     {
         "id": "bombay-coated-mainboard",
@@ -334,7 +318,6 @@ BASE_IPOS = [
     }
 ]
 
-# 2. Extensive 1-Year Historical Closed & Recent Mainboard + SME Archive
 YEARLY_CLOSED_ARCHIVE = [
     ("EAAA India Alternatives Ltd", "Mainboard", "26 Oct 2026", "28 Oct 2026", 510, 29, 1450.0, 48, 34.5, "Link Intime India", "Listed"),
     ("Jio Platforms Ltd", "Mainboard", "21 Oct 2026", "23 Oct 2026", 950, 15, 12500.0, 145, 64.2, "KFin Technologies", "Listed"),
@@ -366,11 +349,10 @@ YEARLY_CLOSED_ARCHIVE = [
     ("Waaree Energies Ltd", "Mainboard", "21 Oct 2025", "23 Oct 2025", 1503, 9, 4321.4, 1350, 76.3, "Link Intime India", "Listed"),
     ("Hyundai Motor India Ltd", "Mainboard", "15 Oct 2025", "17 Oct 2025", 1960, 7, 27870.1, 45, 2.3, "KFin Technologies", "Listed"),
     ("Bajaj Housing Finance Ltd", "Mainboard", "09 Sep 2025", "11 Sep 2025", 70, 214, 6560.0, 80, 63.6, "KFin Technologies", "Listed"),
-    # SME Yearly Closed Archive
     ("Kabra Jewels SME", "SME", "15 Oct 2026", "17 Oct 2026", 128, 1000, 40.0, 65, 145.2, "Bigshare Services", "Listed"),
     ("Rikhav Securities SME", "SME", "08 Oct 2026", "10 Oct 2026", 86, 1600, 88.8, 75, 290.4, "Link Intime India", "Listed"),
-    ("flAir Writing SME", "SME", "28 Sep 2026", "30 Sep 2026", 115, 1200, 31.5, 40, 82.1, "Bigshare Services", "Listed"),
-    ("fabtech Technologies SME", "SME", "18 Sep 2026", "20 Sep 2026", 85, 1600, 27.8, 90, 412.5, "Maashitla Securities", "Listed"),
+    ("Flair Writing SME", "SME", "28 Sep 2026", "30 Sep 2026", 115, 1200, 31.5, 40, 82.1, "Bigshare Services", "Listed"),
+    ("Fabtech Technologies SME", "SME", "18 Sep 2026", "20 Sep 2026", 85, 1600, 27.8, 90, 412.5, "Maashitla Securities", "Listed"),
     ("Citichem India SME", "SME", "05 Sep 2026", "08 Sep 2026", 70, 2000, 12.6, 30, 310.0, "KFin Technologies", "Listed"),
     ("Anya Polytech & Fertilizers SME", "SME", "22 Aug 2026", "25 Aug 2026", 14, 10000, 44.8, 6, 415.0, "Skyline Financial", "Listed"),
     ("Solar91 Cleantech SME", "SME", "10 Aug 2026", "12 Aug 2026", 195, 600, 106.0, 85, 198.4, "Bigshare Services", "Listed"),
@@ -387,8 +369,9 @@ def build_archive_items():
         name, cat, o_date, c_date, price, lot, size_cr, gmp, sub_tot, reg, status_note = row
         est_list = price + gmp
         gain = round((gmp / price) * 100, 2) if price > 0 else 0.0
+        slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
         items.append({
-            "id": f"archive-{idx+1}-{re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')}",
+            "id": f"archive-{idx+1}-{slug}",
             "companyName": name,
             "symbol": "".join([w[0] for w in name.split()[:3]]).upper(),
             "category": cat,
@@ -419,67 +402,8 @@ def build_archive_items():
         })
     return items
 
-def scrape_additional_yearly_ipos(existing_names):
-    """Scrapes full yearly tables from IPOWatch to add any extra IPOs automatically."""
-    extra = []
-    urls = [
-        ("https://ipowatch.in/ipo-grey-market-premium-latest-ipo-gmp/", "Mainboard"),
-        ("https://ipowatch.in/upcoming-ipo-calendar-ipo-list/", "Mainboard")
-    ]
-    for url, default_cat in urls:
-        try:
-            r = requests.get(url, headers=HEADERS, timeout=15)
-            if r.status_code != 200:
-                continue
-            soup = BeautifulSoup(r.text, "html.parser")
-            for table in soup.find_all("table"):
-                for tr in table.find_all("tr")[1:]:
-                    cols = [c.get_text(" ", strip=True) for c in tr.find_all(["td", "th"])]
-                    if len(cols) >= 5:
-                        raw_name = re.sub(r"\s+(Open|Closed|Upcoming)$", "", cols[0], flags=re.I).strip()
-                        if len(raw_name) < 3 or any(raw_name.lower()[:8] in ex.lower() for ex in existing_names):
-                            continue
-                        price = int(extract_num(cols[3], 100))
-                        gmp = int(extract_num(cols[1], 0))
-                        if price <= 0:
-                            continue
-                        reg, reg_url = get_registrar_for_name(raw_name)
-                        cat = "SME" if "sme" in raw_name.lower() else default_cat
-                        extra.append({
-                            "id": f"auto-{len(extra)+100}",
-                            "companyName": raw_name,
-                            "symbol": "".join([w[0] for w in raw_name.split()[:3]]).upper(),
-                            "category": cat,
-                            "subCategory": "BSE SME" if cat == "SME" else "Mainboard",
-                            "status": "Closed",
-                            "statusNote": "Allotment Out",
-                            "openDate": cols[5] if len(cols) > 5 else "2025-2026",
-                            "closeDate": cols[5] if len(cols) > 5 else "2025-2026",
-                            "allotmentDate": "Allotment Out",
-                            "listingDate": "Listed",
-                            "minPrice": max(price - 4, 1),
-                            "maxPrice": price,
-                            "lotSize": max(int(15000 // price), 1),
-                            "issueSizeCr": 150.0,
-                            "gmp": gmp,
-                            "gmpTrend": "up" if gmp > 0 else "neutral",
-                            "estListingPrice": price + gmp,
-                            "estGainPercent": round((gmp / price) * 100, 2),
-                            "leadManager": "Registered Lead Manager",
-                            "registrar": reg,
-                            "registrarUrl": reg_url,
-                            "subscription": {"qib": 15.2, "nii": 24.5, "retail": 18.1, "total": 19.3}
-                        })
-                        existing_names.add(raw_name)
-        except Exception as e:
-            print(f"Extra scrape note: {e}")
-    return extra
-
 def main():
     all_ipos = list(BASE_IPOS) + build_archive_items()
-    existing_names = {item["companyName"] for item in all_ipos}
-    all_ipos.extend(scrape_additional_yearly_ipos(existing_names))
-
     now_str = datetime.now(IST).strftime("%d %b %Y, %I:%M %p IST")
     for item in all_ipos:
         item["updatedAt"] = now_str
@@ -491,7 +415,7 @@ def main():
     }
     with open("ipos.json", "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
-    print(f"Saved {len(all_ipos)} total IPOs (including 1-year archive) to ipos.json")
+    print(f"Successfully generated ipos.json with {len(all_ipos)} IPOs")
 
 if __name__ == "__main__":
     main()
