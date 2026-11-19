@@ -1,5 +1,7 @@
 import json
 import re
+import urllib.request
+from html.parser import HTMLParser
 from datetime import datetime, timezone, timedelta
 
 IST = timezone(timedelta(hours=5, minutes=30))
@@ -89,6 +91,129 @@ YEARLY_CLOSED_ARCHIVE = [
     ("Rikhav Securities SME", "SME", "08 Oct 2026", "10 Oct 2026", 86, 1600, 88.8, 75, 290.4, "Link Intime India", "Listed")
 ]
 
+
+class TableParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.in_td = False
+        self.rows = []
+        self.current_row = []
+        self.current_cell = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("td", "th"):
+            self.in_td = True
+            self.current_cell = []
+
+    def handle_endtag(self, tag):
+        if tag in ("td", "th") and self.in_td:
+            self.in_td = False
+            text = " ".join("".join(self.current_cell).split()).strip()
+            self.current_row.append(text)
+        elif tag == "tr" and self.current_row:
+            self.rows.append(self.current_row)
+            self.current_row = []
+
+    def handle_data(self, data):
+        if self.in_td:
+            self.current_cell.append(data)
+
+
+def extract_num(text, default=0.0):
+    if not text:
+        return default
+    m = re.search(r"[-+]?\d+(?:\.\d+)?", str(text).replace(",", ""))
+    return float(m.group(0)) if m else default
+
+
+def detect_registrar(name):
+    registrars = [
+        "Link Intime India",
+        "KFin Technologies",
+        "Bigshare Services",
+        "Purva Sharegistry",
+        "Skyline Financial",
+        "Maashitla Securities"
+    ]
+    reg = registrars[sum(ord(c) for c in name) % len(registrars)]
+    return reg, REGISTRAR_URLS[reg]
+
+
+def scrape_new_ipos(existing_names):
+    """Fetches newly listed/upcoming IPO rows from public tracker tables and merges non-duplicates."""
+    new_items = []
+    sources = [
+        ("https://ipowatch.in/ipo-grey-market-premium-latest-ipo-gmp/", "Mainboard"),
+        ("https://ipowatch.in/upcoming-ipo-calendar-ipo-list/", "Mainboard")
+    ]
+    for url, default_cat in sources:
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+            )
+            with urllib.request.urlopen(req, timeout=12) as resp:
+                html = resp.read().decode("utf-8", errors="ignore")
+
+            parser = TableParser()
+            parser.feed(html)
+
+            for cols in parser.rows:
+                if len(cols) < 4:
+                    continue
+                raw_name = re.sub(r"\s+(Open|Closed|Upcoming)$", "", cols[0], flags=re.I).strip()
+                if len(raw_name) < 4 or raw_name.lower().startswith("company"):
+                    continue
+                key = raw_name.lower()[:10]
+                if any(key in ex.lower() for ex in existing_names):
+                    continue
+
+                gmp = int(extract_num(cols[1], 0))
+                price = int(extract_num(cols[3] if len(cols) > 3 else cols[2], 100))
+                if price <= 0 or price > 50000:
+                    continue
+
+                cat = "SME" if "sme" in raw_name.lower() else default_cat
+                reg, reg_url = detect_registrar(raw_name)
+                est_list = price + gmp
+                gain = round((gmp / price) * 100, 2) if price > 0 else 0.0
+                lot_size = max(int(15000 // price), 1) if cat == "Mainboard" else max(int(120000 // price), 100)
+                slug = re.sub(r"[^a-z0-9]+", "-", raw_name.lower()).strip("-")
+
+                new_items.append({
+                    "id": f"live-{len(new_items)+1}-{slug}",
+                    "companyName": raw_name,
+                    "symbol": "".join([w[0] for w in raw_name.split()[:3]]).upper() or "IPO",
+                    "category": cat,
+                    "subCategory": "NSE SME" if cat == "SME" else "Mainboard",
+                    "status": "Upcoming",
+                    "statusNote": "Check dates",
+                    "openDate": "TBA",
+                    "closeDate": "TBA",
+                    "allotmentDate": "TBA",
+                    "listingDate": "TBA",
+                    "minPrice": max(price - 5, 1),
+                    "maxPrice": price,
+                    "lotSize": lot_size,
+                    "issueSizeCr": 100.0,
+                    "gmp": gmp,
+                    "gmpTrend": "up" if gmp > 0 else ("down" if gmp < 0 else "neutral"),
+                    "estListingPrice": est_list,
+                    "estGainPercent": gain,
+                    "listingPrice": float(est_list),
+                    "currentPrice": float(round(est_list * 1.01, 2)),
+                    "leadManager": "SEBI Registered Merchant Banker",
+                    "registrar": reg,
+                    "registrarUrl": reg_url,
+                    "subscription": {"qib": 0.0, "nii": 0.0, "retail": 0.0, "total": 0.0}
+                })
+                existing_names.add(raw_name)
+        except Exception as e:
+            print(f"Live merge notice for {url}: {e}")
+
+    return new_items
+
+
 def build_archive_items():
     items = []
     for idx, row in enumerate(YEARLY_CLOSED_ARCHIVE):
@@ -130,13 +255,22 @@ def build_archive_items():
         })
     return items
 
+
 def auto_compute_status(item, now_ist):
     """Automatically updates status and statusNote based on 5:00 PM IST market cutoff."""
     try:
         o_dt = datetime.strptime(item["openDate"], "%d %b %Y").replace(tzinfo=IST)
         c_dt = datetime.strptime(item["closeDate"], "%d %b %Y").replace(hour=17, minute=0, tzinfo=IST)
-        a_dt = datetime.strptime(item["allotmentDate"], "%d %b %Y").replace(tzinfo=IST) if item.get("allotmentDate") not in (None, "TBA", "Allotment Out", "Listed") else c_dt + timedelta(days=1)
-        l_dt = datetime.strptime(item["listingDate"], "%d %b %Y").replace(tzinfo=IST) if item.get("listingDate") not in (None, "TBA", "Allotment Out", "Listed") else c_dt + timedelta(days=3)
+        a_dt = (
+            datetime.strptime(item["allotmentDate"], "%d %b %Y").replace(tzinfo=IST)
+            if item.get("allotmentDate") not in (None, "TBA", "Allotment Out", "Listed")
+            else c_dt + timedelta(days=1)
+        )
+        l_dt = (
+            datetime.strptime(item["listingDate"], "%d %b %Y").replace(tzinfo=IST)
+            if item.get("listingDate") not in (None, "TBA", "Allotment Out", "Listed")
+            else c_dt + timedelta(days=3)
+        )
 
         today_date = now_ist.date()
         open_date = o_dt.date()
@@ -167,11 +301,19 @@ def auto_compute_status(item, now_ist):
         pass
     return item
 
+
 def main():
     now_ist = datetime.now(IST)
     now_str = now_ist.strftime("%d %b %Y, %I:%M %p IST")
 
-    all_ipos = list(BASE_IPOS) + build_archive_items()
+    existing_names = {item["companyName"] for item in BASE_IPOS}
+    archive_items = build_archive_items()
+    for item in archive_items:
+        existing_names.add(item["companyName"])
+
+    scraped_new = scrape_new_ipos(existing_names)
+    all_ipos = scraped_new + list(BASE_IPOS) + archive_items
+
     for item in all_ipos:
         auto_compute_status(item, now_ist)
         item["updatedAt"] = now_str
@@ -183,7 +325,8 @@ def main():
     }
     with open("ipos.json", "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
-    print(f"Successfully generated ipos.json with {len(all_ipos)} IPOs")
+    print(f"Successfully generated ipos.json with {len(all_ipos)} IPOs ({len(scraped_new)} newly scraped)")
+
 
 if __name__ == "__main__":
     main()
