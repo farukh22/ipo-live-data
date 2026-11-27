@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "27 Nov 2026, 04:24 AM IST",
-  "totalCount": 37,
+  "lastUpdated": "27 Nov 2026, 07:11 PM IST",
+  "totalCount": 35,
   "ipos": [
     {
       "id": "live-1-integris-medtech",
@@ -33,7 +33,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-2-airpro-technology",
@@ -51,12 +51,12 @@
       "maxPrice": 99,
       "lotSize": 1212,
       "issueSizeCr": 100.0,
-      "gmp": 2,
+      "gmp": 3,
       "gmpTrend": "up",
-      "estListingPrice": 101,
-      "estGainPercent": 2.02,
-      "listingPrice": 101.0,
-      "currentPrice": 102.01,
+      "estListingPrice": 102,
+      "estGainPercent": 3.03,
+      "listingPrice": 102.0,
+      "currentPrice": 103.02,
       "leadManager": "SEBI Registered Merchant Banker",
       "registrar": "KFin Technologies",
       "registrarUrl": "https://kosmic.kfintech.com/ipostatus/",
@@ -66,7 +66,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-3-a-j-packaging",
@@ -99,7 +99,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-4-matangi-rubber",
@@ -117,12 +117,12 @@
       "maxPrice": 172,
       "lotSize": 87,
       "issueSizeCr": 100.0,
-      "gmp": 27,
+      "gmp": 31,
       "gmpTrend": "up",
-      "estListingPrice": 199,
-      "estGainPercent": 15.7,
-      "listingPrice": 199.0,
-      "currentPrice": 200.99,
+      "estListingPrice": 203,
+      "estGainPercent": 18.02,
+      "listingPrice": 203.0,
+      "currentPrice": 205.03,
       "leadManager": "SEBI Registered Merchant Banker",
       "registrar": "Purva Sharegistry",
       "registrarUrl": "https://www.purvashare.com/investor-service/ipo-query",
@@ -132,7 +132,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-5-swara-baby-products",
@@ -146,16 +146,16 @@
       "closeDate": "04 Dec 2026",
       "allotmentDate": "TBA",
       "listingDate": "TBA",
-      "minPrice": 21,
-      "maxPrice": 26,
-      "lotSize": 576,
+      "minPrice": 105,
+      "maxPrice": 111,
+      "lotSize": 135,
       "issueSizeCr": 100.0,
-      "gmp": 0,
-      "gmpTrend": "neutral",
-      "estListingPrice": 26,
-      "estGainPercent": 0.0,
-      "listingPrice": 26.0,
-      "currentPrice": 26.26,
+      "gmp": 3,
+      "gmpTrend": "up",
+      "estListingPrice": 114,
+      "estGainPercent": 2.7,
+      "listingPrice": 114.0,
+      "currentPrice": 115.14,
       "leadManager": "SEBI Registered Merchant Banker",
       "registrar": "Bigshare Services",
       "registrarUrl": "https://ipo.bigshareonline.com/IPO_Status.html",
@@ -165,7 +165,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-6-monomark-engineering",
@@ -183,12 +183,12 @@
       "maxPrice": 65,
       "lotSize": 230,
       "issueSizeCr": 100.0,
-      "gmp": 24,
+      "gmp": 20,
       "gmpTrend": "up",
-      "estListingPrice": 89,
-      "estGainPercent": 36.92,
-      "listingPrice": 89.0,
-      "currentPrice": 89.89,
+      "estListingPrice": 85,
+      "estGainPercent": 30.77,
+      "listingPrice": 85.0,
+      "currentPrice": 85.85,
       "leadManager": "SEBI Registered Merchant Banker",
       "registrar": "KFin Technologies",
       "registrarUrl": "https://kosmic.kfintech.com/ipostatus/",
@@ -198,7 +198,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-7-vishwas-refoils-consumer",
@@ -212,16 +212,16 @@
       "closeDate": "07 Dec 2026",
       "allotmentDate": "TBA",
       "listingDate": "TBA",
-      "minPrice": 21,
-      "maxPrice": 26,
-      "lotSize": 4615,
+      "minPrice": 85,
+      "maxPrice": 90,
+      "lotSize": 1333,
       "issueSizeCr": 100.0,
       "gmp": 0,
       "gmpTrend": "neutral",
-      "estListingPrice": 26,
+      "estListingPrice": 90,
       "estGainPercent": 0.0,
-      "listingPrice": 26.0,
-      "currentPrice": 26.26,
+      "listingPrice": 90.0,
+      "currentPrice": 90.9,
       "leadManager": "SEBI Registered Merchant Banker",
       "registrar": "KFin Technologies",
       "registrarUrl": "https://kosmic.kfintech.com/ipostatus/",
@@ -231,7 +231,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-8-encube-ethicals",
@@ -245,16 +245,16 @@
       "closeDate": "07 Dec 2026",
       "allotmentDate": "TBA",
       "listingDate": "TBA",
-      "minPrice": 21,
-      "maxPrice": 26,
-      "lotSize": 576,
+      "minPrice": 22,
+      "maxPrice": 27,
+      "lotSize": 555,
       "issueSizeCr": 100.0,
       "gmp": 0,
       "gmpTrend": "neutral",
-      "estListingPrice": 26,
+      "estListingPrice": 27,
       "estGainPercent": 0.0,
-      "listingPrice": 26.0,
-      "currentPrice": 26.26,
+      "listingPrice": 27.0,
+      "currentPrice": 27.27,
       "leadManager": "SEBI Registered Merchant Banker",
       "registrar": "Maashitla Securities",
       "registrarUrl": "https://maashitla.com/allotment-status/public-issues",
@@ -264,7 +264,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-9-antala-industries",
@@ -297,7 +297,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-10-maxwell-engineering-solutions",
@@ -330,7 +330,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-11-hgs-india",
@@ -363,7 +363,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-12-vectras-enprocon",
@@ -396,7 +396,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "live-13-johnsoncab-electricals",
@@ -429,73 +429,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
-    },
-    {
-      "id": "live-14-m-k-sons-fine-jewels",
-      "companyName": "M.K.Sons Fine Jewels",
-      "symbol": "MFJ",
-      "category": "Mainboard",
-      "subCategory": "Mainboard",
-      "status": "Upcoming",
-      "statusNote": "Check dates",
-      "openDate": "TBA",
-      "closeDate": "TBA",
-      "allotmentDate": "TBA",
-      "listingDate": "TBA",
-      "minPrice": 157,
-      "maxPrice": 162,
-      "lotSize": 92,
-      "issueSizeCr": 100.0,
-      "gmp": 0,
-      "gmpTrend": "neutral",
-      "estListingPrice": 162,
-      "estGainPercent": 0.0,
-      "listingPrice": 162.0,
-      "currentPrice": 163.62,
-      "leadManager": "SEBI Registered Merchant Banker",
-      "registrar": "Purva Sharegistry",
-      "registrarUrl": "https://www.purvashare.com/investor-service/ipo-query",
-      "subscription": {
-        "qib": 0.0,
-        "nii": 0.0,
-        "retail": 0.0,
-        "total": 0.0
-      },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
-    },
-    {
-      "id": "live-15-ajwa-projects",
-      "companyName": "Ajwa Projects",
-      "symbol": "AP",
-      "category": "Mainboard",
-      "subCategory": "Mainboard",
-      "status": "Upcoming",
-      "statusNote": "Check dates",
-      "openDate": "TBA",
-      "closeDate": "TBA",
-      "allotmentDate": "TBA",
-      "listingDate": "TBA",
-      "minPrice": 198,
-      "maxPrice": 203,
-      "lotSize": 73,
-      "issueSizeCr": 100.0,
-      "gmp": 0,
-      "gmpTrend": "neutral",
-      "estListingPrice": 203,
-      "estGainPercent": 0.0,
-      "listingPrice": 203.0,
-      "currentPrice": 205.03,
-      "leadManager": "SEBI Registered Merchant Banker",
-      "registrar": "KFin Technologies",
-      "registrarUrl": "https://kosmic.kfintech.com/ipostatus/",
-      "subscription": {
-        "qib": 0.0,
-        "nii": 0.0,
-        "retail": 0.0,
-        "total": 0.0
-      },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "mahanadi-coalfields-mainboard",
@@ -528,7 +462,7 @@
         "retail": 0.35,
         "total": 0.49
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "crystal-crop-protection-mainboard",
@@ -561,7 +495,7 @@
         "retail": 9.71,
         "total": 17.68
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "watrana-rentals-sme",
@@ -594,7 +528,7 @@
         "retail": 4.8,
         "total": 3.2
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "shree-siddhivinayak-greentech-sme",
@@ -602,8 +536,8 @@
       "symbol": "SSGIL",
       "category": "SME",
       "subCategory": "NSE SME",
-      "status": "Open",
-      "statusNote": "Closes today (5 PM)",
+      "status": "Closed",
+      "statusNote": "Awaiting allotment",
       "openDate": "25 Nov 2026",
       "closeDate": "27 Nov 2026",
       "allotmentDate": "30 Nov 2026",
@@ -627,7 +561,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "foodlink-fb-holdings-mainboard",
@@ -660,7 +594,7 @@
         "retail": 0.0,
         "total": 0.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-1-bombay-coated-special-steels-ltd",
@@ -693,7 +627,7 @@
         "retail": 15.72,
         "total": 18.5
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-2-vedant-poly-fabs-sme",
@@ -726,7 +660,7 @@
         "retail": 10.2,
         "total": 12.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-3-eaaa-india-alternatives-ltd",
@@ -759,7 +693,7 @@
         "retail": 29.32,
         "total": 34.5
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-4-jio-platforms-ltd",
@@ -792,7 +726,7 @@
         "retail": 54.57,
         "total": 64.2
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-5-paras-healthcare-ltd",
@@ -825,7 +759,7 @@
         "retail": 25.33,
         "total": 29.8
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-6-hero-fincorp-ltd",
@@ -858,7 +792,7 @@
         "retail": 35.02,
         "total": 41.2
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-7-nsdl-national-securities-depository",
@@ -891,7 +825,7 @@
         "retail": 78.54,
         "total": 92.4
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-8-hdb-financial-services-ltd",
@@ -924,7 +858,7 @@
         "retail": 45.13,
         "total": 53.1
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-9-lg-electronics-india-ltd",
@@ -957,7 +891,7 @@
         "retail": 65.02,
         "total": 76.5
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-10-tata-capital-financial-services",
@@ -990,7 +924,7 @@
         "retail": 74.8,
         "total": 88.0
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-11-ather-energy-ltd",
@@ -1023,7 +957,7 @@
         "retail": 22.44,
         "total": 26.4
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-12-zepto-kiranakart-technologies",
@@ -1056,7 +990,7 @@
         "retail": 52.1,
         "total": 61.3
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-13-waaree-energies-ltd",
@@ -1089,7 +1023,7 @@
         "retail": 64.85,
         "total": 76.3
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-14-hyundai-motor-india-ltd",
@@ -1122,7 +1056,7 @@
         "retail": 1.95,
         "total": 2.3
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-15-bajaj-housing-finance-ltd",
@@ -1155,7 +1089,7 @@
         "retail": 54.06,
         "total": 63.6
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-16-kabra-jewels-sme",
@@ -1188,7 +1122,7 @@
         "retail": 123.42,
         "total": 145.2
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     },
     {
       "id": "archive-17-rikhav-securities-sme",
@@ -1221,7 +1155,7 @@
         "retail": 246.84,
         "total": 290.4
       },
-      "updatedAt": "27 Nov 2026, 04:24 AM IST"
+      "updatedAt": "27 Nov 2026, 07:11 PM IST"
     }
   ]
 }
